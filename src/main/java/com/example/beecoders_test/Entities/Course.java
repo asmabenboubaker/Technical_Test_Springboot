@@ -22,4 +22,7 @@ public class Course  implements Serializable {
     private String Name;
     private float Price;
     private String Description;
+    @Lob
+    @Column(name = "image", columnDefinition = "BLOB")
+    private String image;
 }

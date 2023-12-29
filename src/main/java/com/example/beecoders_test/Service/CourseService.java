@@ -6,7 +6,9 @@ import com.example.beecoders_test.Repository.ICourseRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -27,6 +29,7 @@ public class CourseService implements ICourseService {
 
     @Override
     public Course addCourse(Course ce) {
+       // ce.setImage(imageFile.getBytes());
         return iCourseRepo.save(ce);
     }
 
