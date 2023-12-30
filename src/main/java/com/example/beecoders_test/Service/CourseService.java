@@ -17,9 +17,21 @@ public class CourseService implements ICourseService {
     @Autowired
     private ICourseRepo iCourseRepo;
 
-    @Override
     public List<Course> retrieveAllCourse() {
-        return (List<Course>) iCourseRepo.findAll();
+        List<Course> courses = (List<Course>) iCourseRepo.findAll();
+
+        // Update each Course entity to include the image URL
+        courses.forEach(course -> {
+            course.setImageUrl(getImageUrl(course.getImage()));
+        });
+
+        return courses;
+    }
+
+    private String getImageUrl(String imageName) {
+        // You need to construct the URL based on the location where your images are served
+        // Example: Assuming images are served from "/uploads" endpoint
+        return "http://localhost:8081/uploads/" + imageName;
     }
 
     @Override

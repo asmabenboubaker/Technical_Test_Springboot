@@ -33,6 +33,9 @@ public class CourseController {
     public List<Course> getCourse(){
         return ICourseService.retrieveAllCourse();
     }
+
+
+
     /*@PostMapping(value = "/add", consumes = "multipart/form-data")
     public Course addCourse(
             @RequestParam("imageFile") MultipartFile imageFile,

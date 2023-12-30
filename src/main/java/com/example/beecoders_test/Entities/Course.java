@@ -26,5 +26,7 @@ public class Course  implements Serializable {
     @Column(name = "image", columnDefinition = "BLOB")
     private String image;
 
+    @Transient
+    private String imageUrl;
 
 }
