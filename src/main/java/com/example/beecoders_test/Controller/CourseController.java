@@ -91,11 +91,56 @@ public class CourseController {
         }
     }
 
-    @PutMapping ("/update")
+  /*  @PutMapping ("/update")
     public Course updateCourse(@RequestBody Course course){
         return ICourseService.updateCourse(course);
     }
-    @GetMapping("/{id-course}")
+*/
+  @PutMapping("/update")
+  public ResponseEntity<Course> updateCourseWithImage(
+          @RequestParam("imageFile") MultipartFile imageFile,
+          @RequestParam("idCourse") Integer idCourse,
+          @RequestParam("name") String name,
+          @RequestParam("price") float price,
+          @RequestParam("description") String description) throws IOException {
+
+      try {
+          //convert idCourse to integer
+          Course course = ICourseService.retrieveCourse(idCourse);
+          if (course == null) {
+              return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+          }
+
+          // Update course details
+          course.setName(name);
+          course.setPrice(price);
+          course.setDescription(description);
+
+          // Save image to a directory or a database, update the Course entity accordingly
+          String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
+          Path uploadDirectory = Paths.get("uploads");
+
+          if (!Files.exists(uploadDirectory)) {
+              Files.createDirectories(uploadDirectory);
+          }
+
+          Path targetLocation = uploadDirectory.resolve(fileName);
+
+          Files.copy(imageFile.getInputStream(), targetLocation);
+          course.setImage(fileName); // Assuming Course has a field to store the image file name
+
+          ICourseService.updateCourse(course);
+
+          return new ResponseEntity<>(course, HttpStatus.OK);
+      } catch (Exception e) {
+          // Log the exception details
+          System.out.println("Exception during course update:" + e);
+          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
+  }
+
+
+    @GetMapping("/get/{id-course}")
     public Course getById(@PathVariable("id-course") Integer id){
         return ICourseService.retrieveCourse(id);
     }
