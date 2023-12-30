@@ -65,7 +65,7 @@ public class CourseController {
             course.setPrice(price);
             course.setDescription(description);
 
-            // Save image to a directory or a database, update the Course entity accordingly
+
             String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
             //Path targetLocation = Paths.get("uploads").resolve(fileName);
 
@@ -120,7 +120,7 @@ public class CourseController {
 
           // Save image to a directory or a database, update the Course entity accordingly
           String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
-          Path uploadDirectory = Paths.get("static/uploads");
+          Path uploadDirectory = Paths.get("src/main/resources/static/uploads");
 
           if (!Files.exists(uploadDirectory)) {
               Files.createDirectories(uploadDirectory);
@@ -129,7 +129,7 @@ public class CourseController {
           Path targetLocation = uploadDirectory.resolve(fileName);
 
           Files.copy(imageFile.getInputStream(), targetLocation);
-          course.setImage(fileName); // Assuming Course has a field to store the image file name
+          course.setImage(fileName);
 
           ICourseService.updateCourse(course);
 
