@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -67,12 +66,12 @@ public class CourseController {
             String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
             //Path targetLocation = Paths.get("uploads").resolve(fileName);
 
-            Path uploadDirectory = Paths.get("uploads");
-
+            Path uploadDirectory = Paths.get("src/main/resources/static/uploads");
+/*
             if (!Files.exists(uploadDirectory)) {
                 Files.createDirectories(uploadDirectory);
             }
-
+*/
             Path targetLocation = uploadDirectory.resolve(fileName);
 
             Files.copy(imageFile.getInputStream(), targetLocation);
@@ -118,7 +117,7 @@ public class CourseController {
 
           // Save image to a directory or a database, update the Course entity accordingly
           String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
-          Path uploadDirectory = Paths.get("uploads");
+          Path uploadDirectory = Paths.get("static/uploads");
 
           if (!Files.exists(uploadDirectory)) {
               Files.createDirectories(uploadDirectory);
@@ -151,7 +150,7 @@ public class CourseController {
 
     @GetMapping("/{imageName}")
     public ResponseEntity<Resource> getImage(@PathVariable String imageName) throws IOException {
-        Path imagePath = Paths.get("uploads").resolve(imageName);
+        Path imagePath = Paths.get("static/uploads").resolve(imageName);
         Resource resource = (Resource) new UrlResource(imagePath.toUri());
 
 

@@ -25,4 +25,6 @@ public class Course  implements Serializable {
     @Lob
     @Column(name = "image", columnDefinition = "BLOB")
     private String image;
+
+
 }
